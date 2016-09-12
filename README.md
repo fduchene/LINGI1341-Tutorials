@@ -1,1 +1,1 @@
-# LSINF1341-Tutorials
+# LINGI1341-Tutorials

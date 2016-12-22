@@ -30,7 +30,9 @@ Logger les secrets de connexion
 -------------------------------
 
 Pour cette partie ci, nous allons définir une variable d'environnement qui va dire à nos navigateurs de logger les secrets de
-connexion dans un fichier log. Cette technique a un défaut majeur: elle ne marche qu'avec les vieilles version de Firefox (< 48) et les vieilles version de Chrome (< ? ); cela a été désactivé dans les version suivantes pour des raisons de sécurité.  Pour enregistrer les secret de connexion, on va utiliser les commandes suivantes.
+connexion dans un fichier log. Cette technique a un défaut majeur: elle ne marche qu'avec les vieilles version de Firefox (< 48) 
+et les vieilles version de Chrome (< ? ); cela a été désactivé dans les version suivantes pour des raisons de sécurité.  
+Pour enregistrer les secret de connexion, on va utiliser les commandes suivantes.
 
 .. code-block:: bash
 
@@ -39,17 +41,22 @@ connexion dans un fichier log. Cette technique a un défaut majeur: elle ne marc
     # Création dossier qui va contenir les fichiers de log
     mkdir ~/logBrowsers
 
-    # On définit la variable d’environnement qui va dire à nos navigateurs de logger les secrets de session
+    # On définit la variable d’environnement qui va dire à nos 
+    navigateurs de logger les secrets de session
     export SSLKEYLOGFILE="~/logBrowsers/browserSecret.log"
 
     # On créé le fichier de log
     touch $SSLKEYLOGFILE
 
-La façon de faire sous Windows est sensiblement la même (excepté que pour définir un variable d’environnement il faut passer par la GUI Windows et redémarrer après). Pour les mac users, c'est la même chose (je pense,  je n'ai pas de mac sous la main).
+La façon de faire sous Windows est sensiblement la même (excepté que pour définir un variable d’environnement il faut passer 
+par la GUI Windows et redémarrer après). Pour les mac users, c'est la même chose (je pense,  je n'ai pas de mac sous la main).
 
-Une fois cela fait, lancer votre navigateur DANS LE MEME CONSOLE pour qu'il prenne les variables d'environnement et qu'ils output les secrets de session dans le fichier, lancez Wireshark et commencez l'enregistrement des paquets comme d'habitude.
+Une fois cela fait, lancer votre navigateur DANS LE MEME CONSOLE pour qu'il prenne les variables d'environnement et qu'ils output 
+les secrets de session dans le fichier, lancez Wireshark et commencez l'enregistrement des paquets comme d'habitude.
 
-A la fin de la session d'enregistrement, dans Wireshark, allez dans *Edit -> Préférences -> Protocols -> SSL* Une fois là, dans le champ *(Pre)-Master-Secret log filename* indiquez l'emplacement du fichier de log définit plus tôt (si vous avez tapé les commandes texto, cela devrait être ici : ~/logBrowsers/browserSecret.log). Cliquez sur *Appliquer*, votre traffic ssl est maintenant déchiffré.
+A la fin de la session d'enregistrement, dans Wireshark, allez dans *Edit -> Préférences -> Protocols -> SSL* Une fois là, dans 
+le champ *(Pre)-Master-Secret log filename* indiquez l'emplacement du fichier de log définit plus tôt (si vous avez tapé les 
+commandes texto, cela devrait être ici : ~/logBrowsers/browserSecret.log). Cliquez sur *Appliquer*, votre traffic ssl est maintenant déchiffré.
 
 
 .. figure:: optn1.png
@@ -73,13 +80,15 @@ Comme dans la partie précédente de ce tuto, on va commencer par définir la va
     # Création dossier qui va contenir les fichiers de log
     mkdir ~/logBrowsers
 
-    # On définit la variable d’environnement qui va dire à nos navigateurs de logger les secrets de session
+    # On définit la variable d’environnement qui va dire à nos 
+    navigateurs de logger les secrets de session
     export MITMPROXY_SSLKEYLOGFILE="~/logBrowsers/proxySecret.log"
 
     # On créé le fichier de log
     touch $MITMPROXY_SSLKEYLOGFILE
 
-    # On lance le proxy avec l'option anticache qui va nous assurer que le browser n'utilise pas son cache local
+    # On lance le proxy avec l'option anticache qui va 
+    nous assurer que le browser n'utilise pas son cache local
     mitmdump --anticache
 
 Définir le proxy
@@ -103,7 +112,7 @@ Pour ajouter le certificat custom, allez à l'adresse suivante : *mitm.it* et cl
 
 Déchiffrer la capture
 ---------------------
-Une petite manipulation du certificat de mitmproxy va être nécessaire pour que Wireshark le comprenne. Tout d'abord, allez dans *~/.mitmproxy* et copiez le fichier appelé *mitmproxy-ca.pem* autre part. En ouvrant la copie du fichier dnas un éditeur de texte, vous devriez voir quelque chose comme ca :
+Une petite manipulation du certificat de mitmproxy va être nécessaire pour que Wireshark le comprenne. Tout d'abord, allez dans *~/.mitmproxy* et copiez le fichier appelé *mitmproxy-ca.pem* autre part. En ouvrant la copie du fichier dans un éditeur de texte, vous devriez voir quelque chose comme ca :
 
 ::
 
@@ -120,7 +129,7 @@ Une petite manipulation du certificat de mitmproxy va être nécessaire pour que
   QR7spJGZcsVezti/S/uhb3KoU7CS
   -----END CERTIFICATE-----
 
-Note [...] veut juste dire que le fichier est plus ong mais que ca a été raccourcis pour des raisons de lisibilité. Supprimez tout ce qui se trouve entre *begin certifiacte* et *end certificate* (marqueurs inclus) pour arriver à qqch comme ça :
+Note:  "[...]" veut juste dire que le fichier est plus long mais qu'il a été raccourcis pour des raisons de lisibilité. Supprimez tout ce qui se trouve entre *begin certifiacte* et *end certificate* (marqueurs inclus) pour arriver à qqch comme ça :
 
 ::
 
